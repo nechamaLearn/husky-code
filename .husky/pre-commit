@@ -5,22 +5,10 @@ FILES=$(git diff --cached --name-only --diff-filter=ACMR | sed 's| |\\ |g')
 # Prettify all selected files
 echo "$FILES" | xargs ./node_modules/.bin/prettier --ignore-unknown --write
 
-
-GREEN='\033[32m'
-RED_BG='\033[41m'
-GREEN_BG='\033[42m'
-NC='\033[0m'
-
-PASS=true
-
 echo -e "\nValidating Javascript with eslint:"
 
-#   echo -e "\nPlease install ESlint"
 STAGED_FILES=$(git diff --cached --name-only --diff-filter=ACM | grep ".jsx\{0,1\}$")
-for FILE in ${STAGED_FILES}
-do
-  ./node_modules/.bin/eslint "$FILE" --fix
-done
+echo "$STAGED_FILES" | xargs ./node_modules/.bin/eslint --fix
 
 echo -e "Javascript validation completed."
 
